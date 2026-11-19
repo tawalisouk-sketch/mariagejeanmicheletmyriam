@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>Admin — Jean-Michel &amp; Miryam</title>
+<style>
+  :root{ --bg:#0f1832; --card:rgba(255,255,255,.05); --brd:rgba(126,148,207,.35); --line:rgba(255,255,255,.13);
+         --blue:#2b4aa0; --gold:#d8b25a; --ok:#7fd69a; --no:#f0a08a; --muted:rgba(255,255,255,.58); }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:#fff;font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;font-weight:300;min-height:100vh}
+  h1{font-family:Georgia,'Times New Roman',serif;font-weight:600}
+  #login-screen{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px}
+  .login-box{max-width:360px;width:100%;background:var(--card);border:1px solid var(--brd);border-radius:18px;padding:36px 28px;text-align:center}
+  .login-box h1{font-size:26px;margin-bottom:6px}
+  .login-box p{font-size:13px;color:var(--muted);margin-bottom:24px}
+  input,textarea{font-family:inherit}
+  .login-box input{width:100%;padding:13px 14px;border-radius:10px;border:1px solid var(--line);background:rgba(255,255,255,.06);color:#fff;font-size:15px;margin-bottom:14px}
+  .login-box button{width:100%;padding:13px;border:0;border-radius:10px;background:var(--blue);color:#fff;font-size:14px;letter-spacing:.05em;text-transform:uppercase;cursor:pointer}
+  .login-error{color:#f2a0a0;font-size:12.5px;margin:-6px 0 14px;display:none}
+  .login-error.show{display:block}
+
+  #admin-shell{display:none;max-width:1100px;margin:0 auto;padding:26px 18px 60px}
+  #admin-shell.show{display:block}
+  .top-row{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:22px}
+  .top-row h1{font-size:24px}
+  .actions{display:flex;gap:8px;flex-wrap:wrap}
+  .btn{padding:9px 15px;border-radius:9px;border:1px solid var(--line);background:rgba(255,255,255,.07);color:#fff;font-size:12.5px;cursor:pointer}
+  .btn:hover{background:rgba(255,255,255,.13)}
+  .btn.primary{background:var(--blue);border-color:var(--blue)}
+  .btn.sm{padding:5px 9px;font-size:11.5px}
+  .btn.danger{color:var(--no)}
+  .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin-bottom:20px}
+  .stat{background:var(--card);border:1px solid var(--brd);border-radius:14px;padding:14px;text-align:center}
+  .stat .n{font-size:26px;font-family:Georgia,serif;font-weight:600}
+  .stat .l{font-size:10.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-top:2px}
+  .stat.live .n{color:var(--ok)}
+  .add{background:var(--card);border:1px solid var(--brd);border-radius:14px;padding:16px;margin-bottom:20px}
+  .add summary{cursor:pointer;font-size:14px;color:var(--gold)}
+  .add textarea{width:100%;min-height:110px;margin-top:12px;padding:11px 12px;border-radius:10px;border:1px solid var(--line);background:rgba(255,255,255,.06);color:#fff;font-size:14px}
+  .add .row{display:flex;gap:10px;align-items:center;margin-top:10px;flex-wrap:wrap}
+  .add small{color:var(--muted);font-size:12px}
+  .toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:14px}
+  .filters{display:flex;gap:7px;flex-wrap:wrap;flex:1}
+  .filters button{padding:7px 13px;border-radius:20px;border:1px solid var(--line);background:transparent;color:rgba(255,255,255,.75);font-size:12px;cursor:pointer}
+  .filters button.active{background:var(--blue);border-color:var(--blue);color:#fff}
+  #search{padding:8px 12px;border-radius:20px;border:1px solid var(--line);background:rgba(255,255,255,.06);color:#fff;font-size:13px;min-width:180px}
+  .table-wrap{overflow-x:auto;background:var(--card);border:1px solid var(--brd);border-radius:14px}
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{color:var(--muted);font-weight:400;text-transform:uppercase;font-size:10.5px;letter-spacing:.05em;white-space:nowrap}
+  tr:hover td{background:rgba(255,255,255,.03)}
+  .nm{font-weight:500;font-size:14px}
+  .tag{display:inline-block;font-size:10.5px;color:var(--gold);margin-left:6px}
+  .dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:7px;background:#5b6585;vertical-align:middle}
+  .dot.on{background:var(--ok);box-shadow:0 0 0 4px rgba(127,214,154,.2)}
+  .dot.opened{background:var(--gold)}
+  .badge{display:inline-block;padding:2px 10px;border-radius:20px;font-size:11px}
+  .badge.oui{background:rgba(127,214,154,.2);color:var(--ok)}
+  .badge.non{background:rgba(240,160,138,.2);color:var(--no)}
+  .badge.att{background:rgba(255,255,255,.1);color:var(--muted)}
+  .sub{color:var(--muted);font-size:11.5px;margin-top:2px}
+  .empty{padding:40px 10px;text-align:center;color:var(--muted);font-size:13.5px}
+  .foot{margin-top:16px;font-size:12px;color:rgba(255,255,255,.4);line-height:1.6}
+</style>
+</head>
+<body>
+
+<div id="login-screen">
+  <div class="login-box">
+    <h1>Espace admin</h1>
+    <p>Jean-Michel &amp; Miryam — accès réservé</p>
+    <form id="loginForm" autocomplete="off">
+      <input type="password" id="pwd" placeholder="Mot de passe" required>
+      <div class="login-error" id="loginError">Mot de passe incorrect.</div>
+      <button type="submit" id="loginBtn">Entrer</button>
+    </form>
+  </div>
+</div>
+
+<div id="admin-shell">
+  <div class="top-row">
+    <h1>Invitations &amp; réponses</h1>
+    <div class="actions">
+      <button class="btn" id="exportBtn">Exporter CSV</button>
+      <button class="btn" id="refreshBtn">Actualiser</button>
+      <button class="btn primary" id="logoutBtn">Déconnexion</button>
+    </div>
+  </div>
+
+  <div class="stats" id="stats"></div>
+
+  <details class="add" id="addBox">
+    <summary>➕ Ajouter des invités (un nom par ligne)</summary>
+    <textarea id="newNames" placeholder="Kouassi Marie&#10;Yao Jean&#10;..."></textarea>
+    <div class="row">
+      <button class="btn primary" id="addBtn">Ajouter et générer les liens</button>
+      <small>Chaque invité reçoit son propre lien : il y voit son nom et ne répond que pour lui-même.</small>
+    </div>
+  </details>
+
+  <div class="toolbar">
+    <div class="filters" id="filters">
+      <button class="active" data-f="tous">Tous</button>
+      <button data-f="online">En ligne</button>
+      <button data-f="ouverte">Ont ouvert</button>
+      <button data-f="nonouverte">N'ont pas ouvert</button>
+      <button data-f="oui">Présents</button>
+      <button data-f="non">Absents</button>
+      <button data-f="att">Sans réponse</button>
+    </div>
+    <input id="search" type="search" placeholder="Rechercher un nom…">
+  </div>
+
+  <div class="table-wrap">
+    <div class="empty" id="loadingState">Chargement…</div>
+    <table id="tbl" style="display:none">
+      <thead><tr><th>Invité</th><th>Statut</th><th>Ouvertures</th><th>Réponse</th><th>Téléphone</th><th>Message</th><th>Lien</th></tr></thead>
+      <tbody id="body"></tbody>
+    </table>
+  </div>
+
+  <p class="foot">
+    « En ligne » = la page de l'invitation est ouverte en ce moment sur son téléphone (actualisé toutes les 15 secondes).
+    « Ouverte » = l'invité a cliqué sur l'enveloppe. Les données sont enregistrées sur votre serveur (invites.json, opens.json, data.json).
+  </p>
+</div>
+
+<script>
+const KEY = 'jm_admin_key';
+const $ = id => document.getElementById(id);
+const norm = v => (v || '').toString().normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/\s+/g, ' ').trim();
+const esc = s => (s || '').toString().replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+const ONLINE_MS = 70000;
+let state = null, rows = [], filter = 'tous', timer = null;
+
+function showAdmin(){ $('login-screen').style.display = 'none'; $('admin-shell').classList.add('show'); load(); timer = setInterval(load, 15000); }
+
+$('loginForm').addEventListener('submit', async e => {
+  e.preventDefault();
+  const pwd = $('pwd').value, btn = $('loginBtn'); btn.disabled = true; btn.textContent = 'Connexion…';
+  try {
+    const r = await fetch('/api/admin/state?key=' + encodeURIComponent(pwd));
+    if (r.status === 401) $('loginError').classList.add('show');
+    else { sessionStorage.setItem(KEY, pwd); $('loginError').classList.remove('show'); showAdmin(); }
+  } catch (err) { $('loginError').textContent = 'Impossible de contacter le serveur.'; $('loginError').classList.add('show'); }
+  btn.disabled = false; btn.textContent = 'Entrer';
+});
+$('logoutBtn').onclick = () => { sessionStorage.removeItem(KEY); location.reload(); };
+$('refreshBtn').onclick = load;
+const key = () => encodeURIComponent(sessionStorage.getItem(KEY) || '');
+
+async function load(){
+  try {
+    const r = await fetch('/api/admin/state?key=' + key());
+    if (r.status === 401) { sessionStorage.removeItem(KEY); location.reload(); return; }
+    state = await r.json(); build(); render();
+  } catch (err) { $('loadingState').style.display = 'block'; $('loadingState').textContent = "Impossible de charger les données. Vérifiez que le serveur tourne (node server.js)."; }
+}
+
+/* Une ligne par invité : liste d'invités + personnes qui ont ouvert + réponses sans invitation */
+function build(){
+  const map = new Map();
+  const get = (nom, horsListe) => { const k = norm(nom); if (!map.has(k)) map.set(k, { k, nom, horsListe, open: null, rsvp: null }); return map.get(k); };
+  state.invites.forEach(i => get(i.nom, false));
+  Object.entries(state.opens).forEach(([k, o]) => { const r = get(o.nom, true); r.open = o; });
+  [...state.rsvps].reverse().forEach(x => { const r = get(x.invite || x.nom, true); r.rsvp = x; });   // la plus récente l'emporte
+  // rattacher les réponses dont le nom ne correspond pas exactement à un invité (nom modifié dans le formulaire)
+  rows = [...map.values()].map(r => ({ ...r, online: r.open && (state.now - r.open.vu) < ONLINE_MS }));
+  rows.sort((a, b) => (b.online - a.online) || ((b.open ? b.open.vu : 0) - (a.open ? a.open.vu : 0)) || a.nom.localeCompare(b.nom));
+}
+
+function fmt(ms){ return new Date(ms).toLocaleString('fr-FR', { day:'2-digit', month:'2-digit', hour:'2-digit', minute:'2-digit' }); }
+function ago(ms){ const s = Math.max(0, (state.now - ms) / 1000); if (s < 60) return "à l'instant"; if (s < 3600) return 'il y a ' + Math.round(s/60) + ' min'; if (s < 86400) return 'il y a ' + Math.round(s/3600) + ' h'; return 'il y a ' + Math.round(s/86400) + ' j'; }
+const link = nom => location.origin + '/?invite=' + encodeURIComponent(nom);
+
+function render(){
+  const total = rows.length, online = rows.filter(r => r.online).length, ouvertes = rows.filter(r => r.open && r.open.nb > 0).length;
+  const oui = rows.filter(r => r.rsvp && r.rsvp.presence === 'Oui').length, non = rows.filter(r => r.rsvp && r.rsvp.presence === 'Non').length;
+  $('stats').innerHTML = `
+    <div class="stat"><div class="n">${total}</div><div class="l">Invités</div></div>
+    <div class="stat live"><div class="n">${online}</div><div class="l">En ligne</div></div>
+    <div class="stat"><div class="n">${ouvertes}</div><div class="l">Ont ouvert</div></div>
+    <div class="stat"><div class="n">${oui}</div><div class="l">Présents</div></div>
+    <div class="stat"><div class="n">${non}</div><div class="l">Absents</div></div>
+    <div class="stat"><div class="n">${total - oui - non}</div><div class="l">Sans réponse</div></div>`;
+
+  const q = norm($('search').value);
+  let list = rows.filter(r => !q || r.k.includes(q));
+  const f = {
+    online: r => r.online, ouverte: r => r.open && r.open.nb > 0, nonouverte: r => !(r.open && r.open.nb > 0),
+    oui: r => r.rsvp && r.rsvp.presence === 'Oui', non: r => r.rsvp && r.rsvp.presence === 'Non', att: r => !r.rsvp
+  }[filter];
+  if (f) list = list.filter(f);
+
+  $('loadingState').style.display = list.length ? 'none' : 'block';
+  $('loadingState').textContent = rows.length ? 'Aucun résultat.' : "Aucun invité pour l'instant. Ajoutez des noms ci-dessus pour générer les liens.";
+  $('tbl').style.display = list.length ? 'table' : 'none';
+  $('body').innerHTML = list.map((r, i) => {
+    const o = r.open, x = r.rsvp;
+    const st = r.online ? '<span class="dot on"></span>En ligne' : (o && o.nb > 0 ? '<span class="dot opened"></span>Ouverte' : (o ? '<span class="dot"></span>Page vue' : '<span class="dot"></span>Pas encore ouverte'));
+    const ouv = (o && o.nb) ? `${o.nb}×<div class="sub">dernière : ${fmt(o.derniere)} (${ago(o.derniere)})</div>` : '—';
+    const rep = x ? `<span class="badge ${x.presence === 'Oui' ? 'oui' : 'non'}">${x.presence === 'Oui' ? 'Présent(e)' : 'Absent(e)'}</span><div class="sub">${fmt(new Date(x.horodatage).getTime())}</div>` : '<span class="badge att">En attente</span>';
+    return `<tr>
+      <td><span class="nm">${esc(r.nom)}</span>${r.horsListe ? '<span class="tag">hors liste</span>' : ''}</td>
+      <td>${st}</td><td>${ouv}</td><td>${rep}</td>
+      <td>${esc(x ? x.telephone : '')}</td><td>${esc(x ? x.message : '')}</td>
+      <td style="white-space:nowrap">
+        <button class="btn sm" data-copy="${esc(r.nom)}">Copier</button>
+        <a class="btn sm" style="text-decoration:none;display:inline-block" target="_blank" href="https://wa.me/?text=${encodeURIComponent('Bonjour ' + r.nom + ', voici votre invitation personnelle au mariage de Jean-Michel & Miryam : ' + link(r.nom))}">WhatsApp</a>
+        ${r.horsListe ? '' : `<button class="btn sm danger" data-del="${esc(r.nom)}">✕</button>`}
+      </td></tr>`;
+  }).join('');
+}
+
+$('body').addEventListener('click', async e => {
+  const c = e.target.dataset.copy, d = e.target.dataset.del;
+  if (c) { try { await navigator.clipboard.writeText(link(c)); e.target.textContent = 'Copié ✓'; setTimeout(() => e.target.textContent = 'Copier', 1500); } catch (x) { prompt('Copiez ce lien :', link(c)); } }
+  if (d && confirm('Retirer « ' + d + ' » de la liste ? (ses réponses restent enregistrées)')) {
+    await fetch('/api/admin/invites?key=' + key(), { method:'POST', headers:{ 'Content-Type':'application/json' }, body: JSON.stringify({ supprimer: d }) });
+    load();
+  }
+});
+$('addBtn').onclick = async () => {
+  const noms = $('newNames').value.split('\n').map(s => s.trim()).filter(Boolean);
+  if (!noms.length) return;
+  await fetch('/api/admin/invites?key=' + key(), { method:'POST', headers:{ 'Content-Type':'application/json' }, body: JSON.stringify({ noms }) });
+  $('newNames').value = ''; $('addBox').open = false; load();
+};
+$('filters').addEventListener('click', e => {
+  if (!e.target.dataset.f) return;
+  document.querySelectorAll('#filters button').forEach(b => b.classList.remove('active')); e.target.classList.add('active');
+  filter = e.target.dataset.f; render();
+});
+$('search').addEventListener('input', render);
+
+$('exportBtn').onclick = () => {
+  const L = [['Invité','Statut','Nb ouvertures','Dernière ouverture','Réponse','Date réponse','Téléphone','Message','Lien'].join(';')];
+  rows.forEach(r => L.push([r.nom, r.online ? 'En ligne' : (r.open && r.open.nb ? 'Ouverte' : 'Pas ouverte'), r.open ? r.open.nb : 0, r.open ? fmt(r.open.derniere) : '',
+    r.rsvp ? r.rsvp.presence : 'En attente', r.rsvp ? new Date(r.rsvp.horodatage).toLocaleString('fr-FR') : '', r.rsvp ? r.rsvp.telephone : '', r.rsvp ? (r.rsvp.message || '').replace(/[;\n]/g, ' ') : '', link(r.nom)].join(';')));
+  const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob(['﻿' + L.join('\n')], { type:'text/csv;charset=utf-8;' }));
+  a.download = 'invitations-jean-michel-miryam.csv'; a.click();
+};
+if (sessionStorage.getItem(KEY)) showAdmin();
+</script>
+</body>
+</html>

@@ -1,0 +1,10 @@
+{
+  "name": "Jean-Michel & Miryam — Mariage",
+  "short_name": "Jean-Michel & Miryam",
+  "description": "Invitation de mariage de Jean-Michel et Miryam",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#2b4aa0",
+  "icons": []
+}

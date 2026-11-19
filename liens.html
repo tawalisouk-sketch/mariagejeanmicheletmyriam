@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="fr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Liens d'invitation individuels</title>
+<style>
+body{font-family:Georgia,serif;background:#f2f5fc;color:#1f2740;margin:0;padding:24px}
+.w{max-width:760px;margin:0 auto;background:#fff;border-radius:14px;padding:28px;box-shadow:0 10px 30px -15px rgba(31,54,120,.4)}
+h1{font-size:22px;color:#2b4aa0;margin:0 0 6px}p{color:#5d6788;font-size:14px;line-height:1.5}
+label{display:block;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:#2b4aa0;margin:18px 0 6px}
+input,textarea{width:100%;box-sizing:border-box;border:1px solid #c9d3ee;border-radius:8px;padding:10px 12px;font-size:15px;font-family:inherit}
+textarea{min-height:150px}
+button{background:#2b4aa0;color:#fff;border:none;border-radius:8px;padding:11px 18px;font-size:14px;cursor:pointer;margin-top:14px}
+button.s{background:#fff;color:#2b4aa0;border:1px solid #2b4aa0;padding:6px 10px;margin:0 4px 0 0;font-size:12px}
+table{width:100%;border-collapse:collapse;margin-top:22px;font-size:14px}
+td{padding:9px 6px;border-bottom:1px solid #e3e9f7;vertical-align:top}td.l{word-break:break-all;color:#5d6788;font-size:12px}
+</style></head><body><div class="w">
+<h1>Liens d'invitation individuels</h1>
+<p>Une invitation = une personne. Écrivez un nom par ligne : chaque invité reçoit son propre lien, qui affiche son nom sur l'enveloppe et dans le formulaire.</p>
+<label>Adresse du site</label><input id="base" placeholder="https://votre-site.onrender.com">
+<label>Invités (un par ligne)</label><textarea id="names" placeholder="Kouassi Marie&#10;Yao Jean&#10;..."></textarea>
+<button id="go">Générer les liens</button> <button id="copyAll" class="s" style="display:none">Tout copier</button>
+<table id="out"></table>
+</div>
+<script>
+const $=id=>document.getElementById(id);
+$('base').value = location.protocol.startsWith('http') ? location.origin : '';
+let rows=[];
+$('go').onclick=()=>{
+  const base=$('base').value.trim().replace(/\/+$/,'');
+  rows=$('names').value.split('\n').map(s=>s.trim()).filter(Boolean).map(n=>({n,u:base+'/?invite='+encodeURIComponent(n)}));
+  $('out').innerHTML=rows.map((r,i)=>`<tr><td>${r.n.replace(/</g,'&lt;')}</td><td class="l">${r.u}</td><td><button class="s" data-c="${i}">Copier</button><a href="https://wa.me/?text=${encodeURIComponent('Bonjour '+r.n+', voici votre invitation personnelle au mariage de Jean-Michel & Miryam : '+r.u)}" target="_blank"><button class="s">WhatsApp</button></a></td></tr>`).join('');
+  $('copyAll').style.display=rows.length?'inline-block':'none';
+};
+document.addEventListener('click',e=>{const c=e.target.dataset&&e.target.dataset.c; if(c!==undefined&&c!==''){navigator.clipboard.writeText(rows[c].u);e.target.textContent='Copié ✓';}});
+$('copyAll').onclick=()=>{navigator.clipboard.writeText(rows.map(r=>r.n+' : '+r.u).join('\n'));$('copyAll').textContent='Copié ✓';};
+</script></body></html>

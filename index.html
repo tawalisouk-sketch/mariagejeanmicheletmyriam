@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#2b4aa0">
+<title>Jean-Michel &amp; Miryam — Invitation de Mariage</title>
+<meta name="description" content="Jean-Michel et Miryam vous convient à leur union. Confirmez votre présence.">
+<link rel="manifest" href="manifest.json">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Lora:ital,wght@0,400;0,500;0,600;1,400&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --g:#2b4aa0; --g-dark:#1f3678; --g-soft:#7e94cf; --pale:#e9eef9; --cream:#fbf9f1; --gold:#b8913a;
+  --ink:#1f2740; --muted:#5d6788; --line:rgba(43,74,160,.22);
+  --serif:'Playfair Display','Times New Roman',serif; --body:'Lora',Georgia,serif; --script:'Great Vibes','Brush Script MT',cursive;
+  --ease:cubic-bezier(.22,.8,.25,1);
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth}
+body{font-family:var(--body);color:var(--ink);background:linear-gradient(160deg,#f5f7fd 0%,#dfe6f6 100%);min-height:100vh;min-height:100dvh;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+body.locked{overflow:hidden}
+a{color:inherit;text-decoration:none}
+img,svg{display:block;max-width:100%}
+button,input,textarea{font-family:inherit;-webkit-appearance:none;appearance:none;border-radius:0}
+.hidden{display:none!important}
+
+/* ============ OUVERTURE : CARTE ============ */
+#splash{position:fixed;inset:0;z-index:1000;display:flex;align-items:center;justify-content:center;padding:20px;background:linear-gradient(160deg,#f5f7fd 0%,#dfe6f6 100%);transition:opacity 1s var(--ease) .15s,visibility 1.3s}
+#splash.out{opacity:0;visibility:hidden;pointer-events:none}
+.petal{position:absolute;top:0;color:var(--g-soft);opacity:.35;animation:floaty linear infinite;font-size:18px;pointer-events:none}
+@keyframes floaty{0%{transform:translateY(-10vh) rotate(0)}100%{transform:translateY(110vh) rotate(360deg)}}
+.splash-card{position:relative;width:100%;max-width:420px;background:#fff;border-radius:8px;padding:50px 28px 42px;text-align:center;box-shadow:0 30px 60px -20px rgba(31,54,120,.45);overflow:hidden;cursor:pointer;animation:cardIn 1.2s var(--ease) both;transition:transform .9s var(--ease),opacity .9s}
+#splash.out .splash-card{transform:translateY(-30px) scale(.96);opacity:0}
+@keyframes cardIn{from{opacity:0;transform:translateY(24px) scale(.97)}to{opacity:1;transform:none}}
+.splash-card .lily-tl{position:absolute;left:-26px;top:-18px;width:120px;transform:rotate(-8deg)}
+.splash-card .lily-br{position:absolute;right:-30px;bottom:-24px;width:130px;transform:rotate(170deg)}
+.heart-badge{width:52px;height:52px;border-radius:50%;background:var(--g);display:flex;align-items:center;justify-content:center;margin:0 auto 20px;color:#fff;box-shadow:0 10px 20px -6px rgba(31,54,120,.6)}
+.heart-badge svg{width:24px;height:24px}
+.splash-names{font-family:var(--script);font-size:44px;line-height:1.05;color:var(--g)}
+.splash-names small{display:block;font-family:var(--body);font-size:14px;color:var(--ink);margin:4px 0}
+.rule{display:flex;align-items:center;justify-content:center;gap:10px;margin:18px auto;color:var(--gold);width:150px}
+.rule::before,.rule::after{content:'';flex:1;height:1px;background:var(--line)}
+.splash-date{font-size:16px;color:var(--muted);letter-spacing:.03em}
+.splash-for{margin-top:18px}
+.splash-for small{display:block;font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--muted)}
+.splash-for b{display:block;font-family:var(--serif);font-style:italic;font-weight:500;font-size:22px;color:var(--g-dark);margin-top:3px}
+.splash-sub{font-size:16px;color:var(--muted);margin-top:18px}
+#openBtn{margin-top:22px;padding:14px 42px;font-size:16px}
+
+/* ============ PAGE ============ */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:none;cursor:pointer;background:var(--g);color:#fff;
+  font-family:var(--body);font-size:14px;letter-spacing:.04em;padding:12px 30px;border-radius:30px;box-shadow:0 10px 20px -8px rgba(31,54,120,.7);transition:transform .3s var(--ease),background .3s}
+.btn:hover{background:var(--g-dark);transform:translateY(-2px)}
+.btn:disabled{opacity:.6;cursor:wait}
+.btn.ghost{background:transparent;color:var(--g);border:1px solid var(--g);box-shadow:none}
+.btn.ghost:hover{background:var(--g);color:#fff}
+#invite{max-width:480px;margin:0 auto;background:#fff;position:relative;overflow:hidden;box-shadow:0 0 60px rgba(31,54,120,.15)}
+section{position:relative;padding:70px 30px}
+.reveal{opacity:0;transform:translateY(30px);transition:opacity 1s var(--ease),transform 1s var(--ease)}
+.reveal.in{opacity:1;transform:none}
+.h-title{font-family:var(--serif);font-weight:600;font-size:23px;letter-spacing:.04em;text-transform:uppercase;color:var(--g)}
+.deco-lily{position:absolute;pointer-events:none;z-index:0}
+.ribbon{max-width:none;position:relative;z-index:1;width:140%;margin-left:-20%;height:130px;pointer-events:none}
+.content{position:relative;z-index:2}
+.center{text-align:center}
+
+#hero{padding:50px 0 0;min-height:640px}
+#hero .deco-lily.a{right:-34px;top:-10px;width:210px;transform:rotate(6deg)}
+.polaroids{position:relative;height:420px;margin:0 auto;width:100%}
+.pol{position:absolute;background:var(--pale);padding:7px;box-shadow:0 14px 28px -10px rgba(0,0,0,.35);animation:popIn 1.2s var(--ease) both}
+.pol img{width:100%;height:100%;object-fit:cover}
+.pol.p1{left:11%;top:34px;width:170px;height:225px;transform:rotate(-7deg);animation-delay:.2s}
+.pol.p2{left:38%;top:190px;width:185px;height:240px;transform:rotate(8deg);animation-delay:.5s}
+@keyframes popIn{from{opacity:0;transform:translateY(40px) rotate(0)}}
+.hero-names{position:relative;padding:0 30px;margin-top:6px;font-family:var(--serif);font-style:italic;font-weight:500;color:var(--g);font-size:32px;line-height:1.35;letter-spacing:.02em;text-transform:uppercase}
+.hero-names .l2{display:block;padding-left:22%}
+.hero-names .amp{position:absolute;left:34%;top:-12px;font-family:var(--script);font-size:120px;color:rgba(43,74,160,.13);text-transform:none;line-height:1;z-index:0;font-style:normal}
+.hero-names span.t{position:relative;z-index:1}
+
+.annonce .eyebrow{font-family:var(--serif);font-weight:600;font-size:22px;color:var(--g);letter-spacing:.02em;text-transform:uppercase}
+.annonce .deco-lily.b{right:-40px;top:140px;width:190px;transform:rotate(-4deg)}
+.dear{font-family:var(--script);font-size:34px;color:var(--gold);line-height:1.2;margin-bottom:6px}
+.joie{margin-top:18px;font-family:var(--serif);font-size:15px;line-height:1.7;letter-spacing:.03em;text-transform:uppercase;color:var(--g-dark)}
+.who{margin-top:26px}
+.who .nm{font-family:var(--script);font-size:46px;line-height:1.1;color:var(--g)}
+.who .st{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink)}
+.who .and{font-family:var(--script);font-size:38px;color:var(--gold);margin:4px 0}
+.ev{margin-top:34px}
+.ev .kind{font-family:var(--serif);font-size:20px;color:var(--g);letter-spacing:.01em}
+.ev .place{font-family:var(--serif);font-size:18px;color:var(--g-soft);margin-top:2px}
+.ev .when{margin-top:6px;font-size:13px;letter-spacing:.06em;text-transform:uppercase}
+.bigdate{display:flex;align-items:center;justify-content:center;gap:14px;margin-top:10px}
+.bigdate .d{font-family:var(--serif);font-size:68px;line-height:1;color:var(--g);font-weight:400}
+.bigdate .bar{width:1px;align-self:stretch;background:var(--gold)}
+.bigdate .my{font-family:var(--serif);font-size:19px;line-height:1.6;color:var(--g);text-transform:uppercase;letter-spacing:.04em}
+.nb{margin-top:34px;display:inline-block;padding:10px 18px;border:1px solid var(--gold);border-radius:8px;font-family:var(--serif);font-style:italic;font-size:15px;color:var(--g-dark);background:#fbf7ec}
+.tbc{margin-top:8px;font-family:var(--serif);font-style:italic;font-size:16px;color:var(--muted)}
+
+#galerie{padding:40px 0 60px;text-align:center}
+#galerie .h-title{margin-bottom:26px}
+.carousel{display:flex;gap:16px;overflow-x:auto;padding:20px 22% 30px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.carousel::-webkit-scrollbar{display:none}
+.slide{flex:0 0 56%;scroll-snap-align:center;border-radius:14px;overflow:hidden;box-shadow:0 18px 30px -14px rgba(0,0,0,.45);aspect-ratio:3/4;cursor:zoom-in;transition:transform .5s var(--ease),opacity .5s;transform:scale(.88);opacity:.7;background:var(--pale)}
+.slide.active{transform:scale(1);opacity:1}
+.slide img{width:100%;height:100%;object-fit:cover}
+.dots{display:flex;gap:8px;justify-content:center;margin-top:4px}
+.dots i{width:7px;height:7px;border-radius:50%;background:var(--line);transition:all .3s}
+.dots i.on{background:var(--g);transform:scale(1.3)}
+#lightbox{position:fixed;inset:0;z-index:900;background:rgba(10,14,30,.93);display:flex;align-items:center;justify-content:center;opacity:0;visibility:hidden;transition:opacity .4s}
+#lightbox.show{opacity:1;visibility:visible}
+#lightbox img{max-width:94vw;max-height:90vh;border-radius:6px}
+#lightbox button{position:absolute;top:18px;right:20px;background:none;border:none;color:#fff;font-size:34px;cursor:pointer;line-height:1}
+
+.cdcard{position:relative;margin:34px 18px 0;padding:26px 14px 14px;background:linear-gradient(180deg,#fff,#f6f8fd);border:1px solid rgba(184,145,58,.65);border-radius:20px;box-shadow:0 24px 40px -28px rgba(31,54,120,.55);text-align:center}
+.cdcard::before{content:'';position:absolute;inset:6px;border:1px solid rgba(184,145,58,.25);border-radius:15px;pointer-events:none}
+.cd-eyebrow{display:flex;align-items:center;justify-content:center;gap:12px;font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:6px}
+.cd-eyebrow::before,.cd-eyebrow::after{content:'';width:38px;height:1px;background:rgba(184,145,58,.55)}
+.cd-row{position:relative;padding:18px 0 20px}
+.cd-row + .cd-row{border-top:1px solid rgba(184,145,58,.3)}
+.cd-name{font-family:var(--serif);font-style:italic;font-weight:500;color:var(--g);font-size:21px;letter-spacing:.01em}
+.cd-row.main .cd-name{font-size:25px}
+.cd-when{margin-top:3px;font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+.cd-nums{display:flex;justify-content:center;align-items:flex-start;gap:2px;margin-top:14px}
+.cd-n{min-width:62px;text-align:center}
+.cd-n b{display:block;font-family:var(--serif);font-weight:500;font-size:34px;line-height:1;color:var(--g);font-variant-numeric:tabular-nums}
+.cd-row.main .cd-n b{font-size:44px}
+.cd-n span{display:block;margin-top:7px;font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted)}
+.cd-sep{font-family:var(--serif);font-style:normal;font-size:28px;line-height:1.1;color:var(--gold);opacity:.7}
+.cd-row.main .cd-sep{font-size:36px}
+.cd-done{margin-top:12px;font-family:var(--serif);font-style:italic;font-size:16px;color:var(--g-dark)}
+.sub-h{font-family:var(--serif);font-size:20px;color:var(--g);margin-bottom:18px;letter-spacing:.03em}
+.cd{display:flex;justify-content:center;gap:10px;margin:8px 0 6px}
+.cd div{width:70px;padding:14px 0 10px;border-radius:12px;background:var(--pale);box-shadow:inset 0 0 0 1px var(--line)}
+.cd b{display:block;font-family:var(--serif);font-size:28px;color:var(--g);font-weight:600}
+.cd span{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.cd-note{font-size:14px;color:var(--muted)}
+.cal{margin:34px auto 0;max-width:330px}
+.cal .mname{font-family:var(--serif);font-size:18px;color:var(--g);margin-bottom:12px}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;font-size:13px}
+.cal-grid .dow{font-size:11px;color:var(--muted);letter-spacing:.06em;padding-bottom:6px}
+.cal-grid .day{aspect-ratio:1;display:flex;align-items:center;justify-content:center;border-radius:50%}
+.cal-grid .day.mark{background:var(--g);color:#fff;font-weight:600;box-shadow:0 6px 12px -4px rgba(31,54,120,.6)}
+#addCal{margin-top:22px}
+
+.rsvp-card{background:var(--cream);border:1px solid var(--line);border-radius:16px;padding:34px 26px;text-align:left;box-shadow:0 20px 40px -24px rgba(31,54,120,.5)}
+.rsvp-card h3{font-family:var(--serif);font-size:24px;color:var(--g);text-align:center;margin-bottom:8px}
+.rsvp-card .lead{text-align:center;font-size:14px;color:var(--muted);margin-bottom:24px;line-height:1.6}
+.field{margin-bottom:18px}
+.field label.l{display:block;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--g);margin-bottom:6px}
+.field input[type=text],.field input[type=tel],.field textarea{width:100%;background:#fff;border:1px solid var(--line);border-radius:8px;padding:12px 14px;font-size:15px;color:var(--ink);outline:none;transition:border-color .3s,box-shadow .3s}
+.field input:focus,.field textarea:focus{border-color:var(--g);box-shadow:0 0 0 3px rgba(43,74,160,.15)}
+.field textarea{resize:none;min-height:84px}
+.choice{display:flex;flex-direction:column;gap:10px}
+.opt{display:flex;align-items:center;gap:12px;padding:13px 14px;border:1px solid var(--line);border-radius:10px;background:#fff;cursor:pointer;font-size:14.5px;transition:all .3s}
+.opt input{display:none}
+.opt .rd{width:18px;height:18px;border-radius:50%;border:2px solid var(--g-soft);flex-shrink:0;position:relative}
+.opt.active{border-color:var(--g);background:var(--pale)}
+.opt.active .rd::after{content:'';position:absolute;inset:3px;border-radius:50%;background:var(--g)}
+.rsvp-card .btn{width:100%;margin-top:6px;border-radius:10px;padding:14px}
+.ok{display:none;text-align:center;padding:16px 0}
+.ok.show{display:block}
+.ok svg{width:46px;height:46px;margin:0 auto 14px;color:var(--g);animation:popHeart .9s var(--ease)}
+@keyframes popHeart{0%{transform:scale(0)}60%{transform:scale(1.25)}100%{transform:scale(1)}}
+.ok h3{margin-bottom:6px}
+.ok p{font-size:14px;color:var(--muted);line-height:1.6}
+
+.lieu{margin-top:12px}
+.lieu .nm{font-family:var(--serif);font-size:22px;color:var(--g)}
+.lieu .ad{font-size:14px;color:var(--muted);margin:4px 0 14px}
+.lieu + .lieu{margin-top:34px}
+.dress p{font-size:15px;line-height:1.7;margin-top:6px}
+.prog{margin-top:12px;text-align:left}
+.prog .row{display:flex;gap:16px;padding:16px 0;border-bottom:1px dashed var(--line)}
+.prog .row:last-child{border-bottom:none}
+.prog .hr{font-family:var(--serif);font-size:22px;color:var(--g);min-width:70px}
+.prog .tx{font-size:15px;line-height:1.5}
+.prog .tx small{display:block;color:var(--muted);font-size:12.5px;margin-top:2px}
+.prog h4{font-family:var(--serif);font-size:15px;letter-spacing:.14em;text-transform:uppercase;color:var(--g);margin:26px 0 4px;text-align:center}
+.prog h4:first-child{margin-top:0}
+
+.gb-list{margin-top:26px;display:flex;flex-direction:column;gap:14px;text-align:left;max-height:520px;overflow-y:auto;padding-right:4px}
+.gb-item{background:var(--cream);border:1px solid var(--line);border-radius:12px;padding:16px 18px}
+.gb-item .by{font-family:var(--serif);color:var(--g);font-weight:600;font-size:15px}
+.gb-item .dt{font-size:11px;color:var(--muted);margin-left:6px}
+.gb-item p{font-size:14px;line-height:1.6;margin-top:6px;white-space:pre-wrap;word-wrap:break-word}
+.gb-empty{font-size:14px;color:var(--muted);text-align:center;font-style:italic}
+
+footer{padding:50px 30px 90px;text-align:center;background:linear-gradient(180deg,#fff,var(--pale))}
+footer .verse{font-family:var(--script);font-size:38px;color:var(--g);line-height:1.3}
+footer .links{display:flex;flex-direction:column;gap:8px;margin:24px 0;font-size:14px;color:var(--muted)}
+footer .mark{font-family:var(--serif);letter-spacing:.2em;font-size:14px;color:var(--gold)}
+
+#autoscroll{position:fixed;right:76px;bottom:20px;z-index:500;width:48px;height:48px;border-radius:50%;border:1px solid var(--g);background:#fff;color:var(--g);cursor:pointer;display:none;align-items:center;justify-content:center;box-shadow:0 10px 22px -8px rgba(20,30,70,.5)}
+#autoscroll.show{display:flex}
+#autoscroll svg{width:20px;height:20px}
+#music{position:fixed;right:18px;bottom:20px;z-index:500;width:48px;height:48px;border-radius:50%;border:none;background:var(--g);color:#fff;cursor:pointer;display:none;align-items:center;justify-content:center;box-shadow:0 10px 22px -8px rgba(20,30,70,.7)}
+#music.show{display:flex}
+.eq{display:flex;gap:3px;align-items:flex-end;height:16px}
+.eq i{width:3px;height:4px;background:#fff;border-radius:2px}
+#music.playing .eq i{animation:eq 1s ease-in-out infinite}
+#music.playing .eq i:nth-child(2){animation-delay:.2s}
+#music.playing .eq i:nth-child(3){animation-delay:.4s}
+@keyframes eq{0%,100%{height:4px}50%{height:16px}}
+@media (min-width:520px){#invite{border-left:1px solid var(--line);border-right:1px solid var(--line)}}
+</style>
+</head>
+<body class="locked">
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <linearGradient id="gCream" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fffef8"/><stop offset=".6" stop-color="#f3efdc"/><stop offset="1" stop-color="#dde2ef"/></linearGradient>
+    <linearGradient id="gRib" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#5a76bd"/><stop offset=".25" stop-color="#e8edf9"/><stop offset=".5" stop-color="#2b4aa0"/><stop offset=".75" stop-color="#e3e9f7"/><stop offset="1" stop-color="#4a68b0"/></linearGradient>
+    <symbol id="lily" viewBox="0 0 200 420">
+      <path d="M128 150 C 108 250, 70 330, 38 418" fill="none" stroke="#b8913a" stroke-width="3.2" stroke-linecap="round"/>
+      <path d="M138 160 C 140 270, 120 340, 96 418" fill="none" stroke="#dcc27a" stroke-width="2" stroke-linecap="round"/>
+      <path d="M22 36 C 30 -2 112 -14 168 14 C 196 52 168 132 128 184 C 112 206 98 206 86 182 C 52 142 14 96 22 36Z" fill="url(#gCream)"/>
+      <path d="M128 184 C 148 130 176 74 168 14 C 150 70 120 130 86 182 C 98 206 112 206 128 184Z" fill="#cfd6ea" opacity=".55"/>
+      <path d="M60 60 C 80 40 120 36 150 44" fill="none" stroke="#fff" stroke-width="3" opacity=".7" stroke-linecap="round"/>
+      <ellipse cx="96" cy="92" rx="9" ry="36" transform="rotate(-24 96 92)" fill="#ecc95c"/>
+      <ellipse cx="92" cy="80" rx="3" ry="14" transform="rotate(-24 92 80)" fill="#f8e59a" opacity=".8"/>
+    </symbol>
+    <symbol id="ribbon" viewBox="0 0 700 130" preserveAspectRatio="none">
+      <path d="M0 50 C 100 -10, 170 30, 250 70 S 400 110, 470 60 S 600 -5, 700 50 L700 82 C 600 30, 540 100, 470 112 C 390 126, 330 100, 250 100 C 170 62, 100 32, 0 80Z" fill="url(#gRib)" stroke="#b8913a" stroke-width="1" stroke-dasharray="3 3"/>
+    </symbol>
+    <symbol id="heart" viewBox="0 0 24 24"><path fill="currentColor" d="M12 21s-7.5-4.6-9.6-9.2C.9 8.4 2.7 4.8 6.2 4.5c2-.2 3.9.8 5.8 3 1.9-2.2 3.8-3.2 5.8-3 3.5.3 5.3 3.9 3.8 7.3C19.5 16.4 12 21 12 21z"/></symbol>
+  </defs>
+</svg>
+
+<!-- ============ OUVERTURE ============ -->
+<div id="splash">
+  <span class="petal" style="left:8%;animation-duration:14s;animation-delay:-3s">✿</span>
+  <span class="petal" style="left:22%;animation-duration:19s;animation-delay:-9s;font-size:12px">✿</span>
+  <span class="petal" style="left:41%;animation-duration:16s;animation-delay:-6s">✿</span>
+  <span class="petal" style="left:63%;animation-duration:21s;animation-delay:-12s;font-size:14px">✿</span>
+  <span class="petal" style="left:80%;animation-duration:15s;animation-delay:-1s">✿</span>
+  <span class="petal" style="left:92%;animation-duration:18s;animation-delay:-8s;font-size:12px">✿</span>
+  <div class="splash-card" id="envelope" role="button" tabindex="0" aria-label="Ouvrir l'invitation">
+    <svg class="lily-tl" viewBox="0 0 200 420"><use href="#lily"/></svg>
+    <svg class="lily-br" viewBox="0 0 200 420"><use href="#lily"/></svg>
+    <div class="heart-badge"><svg><use href="#heart"/></svg></div>
+    <div class="splash-names">Jean-Michel<small>&amp;</small>Miryam</div>
+    <div class="rule"><svg width="10" height="10" viewBox="0 0 24 24"><use href="#heart"/></svg></div>
+    <div class="splash-date" id="spDate"></div>
+    <div class="splash-for hidden" id="spGuest"><small>Invitation personnelle pour</small><b id="spGuestName"></b></div>
+    <div class="splash-sub">Cordialement invité(e)</div>
+    <button class="btn" id="openBtn" type="button">Ouvrir</button>
+  </div>
+</div>
+
+<!-- ============ INVITATION ============ -->
+<div id="invite">
+
+  <section id="hero">
+    <svg class="deco-lily a" viewBox="0 0 200 420"><use href="#lily"/></svg>
+    <div class="content">
+      <div class="polaroids">
+        <div class="pol p1"><img src="assets/photo1.jpg" alt="Jean-Michel et Miryam"></div>
+        <div class="pol p2"><img src="assets/photo3.jpg" alt="Jean-Michel et Miryam"></div>
+      </div>
+      <h1 class="hero-names reveal"><span class="amp">&amp;</span><span class="t">Jean-Michel</span><span class="t l2">Miryam</span></h1>
+      <div class="cdcard reveal hidden" id="cdCard">
+        <div class="cd-eyebrow">Compte à rebours</div>
+        <div id="cdRows"></div>
+      </div>
+    </div>
+    <svg class="ribbon" style="margin-top:20px"><use href="#ribbon"/></svg>
+  </section>
+
+  <section class="annonce center" id="annonce" style="padding-top:10px">
+    <svg class="deco-lily b" viewBox="0 0 200 420"><use href="#lily"/></svg>
+    <div class="content reveal">
+      <div class="dear hidden" id="dear"></div>
+      <div class="eyebrow">Invitation</div>
+      <p class="joie">Nous avons la joie de vous convier<br>à notre union</p>
+      <div class="who">
+        <div class="nm">Jean-Michel</div><div class="st">Marié</div>
+        <div class="and">&amp;</div>
+        <div class="nm">Miryam</div><div class="st">Mariée</div>
+      </div>
+      <div id="evList"></div>
+      <p class="nb">NB : l’invité n’invite pas.</p>
+    </div>
+    <svg class="ribbon" style="margin-top:30px;margin-bottom:-90px"><use href="#ribbon"/></svg>
+  </section>
+
+  <section id="galerie">
+    <div class="h-title reveal">Galerie photo</div>
+    <div class="carousel" id="carousel">
+      <div class="slide"><img src="assets/photo2.jpg" alt="" loading="lazy"></div>
+      <div class="slide"><img src="assets/photo3.jpg" alt="" loading="lazy"></div>
+      <div class="slide"><img src="assets/photo1.jpg" alt="" loading="lazy"></div>
+      <div class="slide"><img src="assets/photo4.jpg" alt="" loading="lazy"></div>
+      <div class="slide"><img src="assets/photo5.jpg" alt="" loading="lazy"></div>
+      <div class="slide"><img src="assets/photo6.jpg" alt="" loading="lazy"></div>
+    </div>
+    <div class="dots" id="dots"></div>
+  </section>
+
+  <section class="center hidden" id="countdown-sec" style="background:linear-gradient(180deg,#fff,#f2f5fc 60%,#fff)">
+    <div class="content reveal">
+      <div class="sub-h">Notez les dates</div>
+      <div class="cal">
+        <div class="mname" id="calName"></div>
+        <div class="cal-grid" id="calGrid"></div>
+      </div>
+      <button class="btn ghost" id="addCal">Ajouter au calendrier</button>
+    </div>
+  </section>
+
+  <section class="center" id="rsvp" style="background:var(--pale)">
+    <div class="content reveal">
+      <div class="rsvp-card">
+        <form id="rsvpForm">
+          <h3>Confirmer votre présence</h3>
+          <p class="lead">Votre présence serait un honneur. Cette invitation est personnelle et n’est pas transmissible (l’invité n’invite pas). Merci de confirmer pour que nous puissions tout préparer pour vous.</p>
+          <div class="field"><label class="l" for="f-nom">Nom et prénom</label><input type="text" id="f-nom" name="nom" required autocomplete="name"></div>
+          <div class="field"><label class="l" for="f-tel">Téléphone</label><input type="tel" id="f-tel" name="telephone" required autocomplete="tel"></div>
+          <div class="field">
+            <label class="l">Serez-vous présent(e) ?</label>
+            <div class="choice">
+              <label class="opt active"><input type="radio" name="presence" value="Oui" checked><span class="rd"></span>Je serai présent(e)</label>
+              <label class="opt"><input type="radio" name="presence" value="Non"><span class="rd"></span>Désolé(e), je ne peux pas venir</label>
+            </div>
+          </div>
+          <div class="field"><label class="l" for="f-msg">Message (facultatif)</label><textarea id="f-msg" name="message" placeholder="Un mot pour les mariés..."></textarea></div>
+          <button type="submit" class="btn" id="rsvpBtn">Confirmer</button>
+        </form>
+        <div class="ok" id="rsvpOk">
+          <svg><use href="#heart"/></svg>
+          <h3>Merci</h3>
+          <p>Votre réponse a bien été enregistrée.<br>Nous avons hâte de célébrer avec vous.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="center hidden" id="lieux">
+    <div class="content reveal">
+      <div class="h-title">Lieux</div>
+      <div id="lieuxList"></div>
+    </div>
+  </section>
+
+  <section class="center dress" style="padding-top:40px">
+    <div class="content reveal">
+      <div class="h-title">Dress code</div>
+      <p>Votre plus belle tenue, accompagnée de votre plus beau sourire. 😊✨</p>
+    </div>
+  </section>
+
+  <section class="center" id="programme" style="background:linear-gradient(180deg,#fff,#f2f5fc)">
+    <div class="content reveal">
+      <div class="h-title">Programme</div>
+      <div class="prog" id="progList"></div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="verse">Jean-Michel &amp; Miryam</div>
+    <div class="links hidden" id="contacts"></div>
+    <div class="mark">J &amp; M — 2026</div>
+  </footer>
+</div>
+
+<button id="music" aria-label="Musique"><span class="eq"><i></i><i></i><i></i></span></button>
+<button id="autoscroll" aria-label="Défilement automatique" title="Défilement automatique">
+  <svg viewBox="0 0 24 24" fill="currentColor"><g id="icPause"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></g><path id="icPlay" d="M7 4.5v15l12-7.5z" style="display:none"/></svg>
+</button>
+<audio id="bgMusic" loop preload="auto" src="assets/musique.mp3"></audio>
+<div id="lightbox"><button aria-label="Fermer">&times;</button><img alt=""></div>
+
+<script>
+/* =====================================================================
+   RÉGLAGES — modifiez UNIQUEMENT cette partie quand les infos sont connues.
+   date : "AAAA-MM-JJ"   debut / fin : "HH:MM" (heure d'Abidjan)
+   Laissez date: null pour afficher « Date à confirmer ».
+   ===================================================================== */
+const EVENTS = [
+  { titre:"Mariage traditionnel",        date:"2026-11-28", debut:"10:00", fin:null, lieu:"Cocody Riviera 3, Les Coteaux", detail:"" },
+  { titre:"Mariage civil",               date:"2026-12-05", debut:"13:00", fin:null, lieu:"Mairie de Cocody", detail:"" },
+  { titre:"Réception — vin d'honneur",   date:"2026-12-05", debut:"17:00", fin:null, lieu:"Espace Jeckad", detail:"" }
+];
+const COMPTES_A_REBOURS = ["Mariage civil", "Mariage traditionnel"];   // titres des événements comptés ; le premier est mis en avant
+const CONTACTS = [];   // ex. [{ label:"07 00 00 00 00", href:"tel:0700000000" }, { label:"contact@exemple.com", href:"mailto:contact@exemple.com" }]
+/* ===================================================================== */
+
+const MOIS = ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'];
+const pad = n => String(n).padStart(2,'0');
+const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const dated = () => EVENTS.filter(e => e.date);
+const ts = e => new Date(e.date + 'T' + (e.debut || '00:00') + ':00Z');
+const hh = t => t ? t.replace(':','h') : '';
+const jour = e => new Date(e.date + 'T00:00:00Z').toLocaleDateString('fr-FR', { weekday:'long', timeZone:'UTC' });
+
+document.addEventListener('DOMContentLoaded', () => {
+  const $ = id => document.getElementById(id);
+  const music = $('bgMusic'), musicBtn = $('music');
+  const TRACKS = ['assets/musique.mp3', 'assets/musique2.mp3'];   // 1 : à l'ouverture · 2 : à partir de « Confirmer votre présence »
+  let trackIdx = 0;
+
+  /* ---------- Invitation individuelle : ?invite=Nom+Prénom ---------- */
+  const q = new URLSearchParams(location.search);
+  const guest = (q.get('invite') || q.get('i') || '').trim().slice(0, 80);
+  if (guest) {
+    $('spGuestName').textContent = guest; $('spGuest').classList.remove('hidden');
+    $('dear').textContent = 'Cher(e) ' + guest + ','; $('dear').classList.remove('hidden');
+    $('f-nom').value = guest;
+    document.title = 'Invitation pour ' + guest + ' — Jean-Michel & Miryam';
+  }
+
+  /* ---------- Date sur l'écran d'ouverture ---------- */
+  (function(){
+    const days = [...new Set(dated().map(e => e.date))].sort();
+    if (!days.length) return;
+    const parts = days.map(d => { const x = new Date(d + 'T00:00:00Z'); return x.getUTCDate() + (x.getUTCDate() === 1 ? 'er ' : ' ') + MOIS[x.getUTCMonth()].toLowerCase(); });
+    $('spDate').textContent = parts.join(' · ') + ' ' + days[days.length - 1].slice(0, 4);
+  })();
+
+  /* ---------- Contenu issu des EVENTS ---------- */
+  $('evList').innerHTML = EVENTS.map(e => {
+    const dt = e.date ? new Date(e.date + 'T00:00:00Z') : null;
+    return `<div class="ev"><div class="kind">${esc(e.titre)}</div>` +
+      (e.lieu ? `<div class="place">${esc(e.lieu)}</div>` : '') +
+      (dt ? `<div class="when">${e.debut ? 'À ' + hh(e.debut) + ' &nbsp; ' : ''}${esc(jour(e))}</div>
+        <div class="bigdate"><div class="d">${pad(dt.getUTCDate())}</div><div class="bar"></div><div class="my">${MOIS[dt.getUTCMonth()]}<br>${dt.getUTCFullYear()}</div></div>`
+          : `<div class="tbc">Date et lieu à confirmer</div>`) + `</div>`;
+  }).join('');
+
+  const withLieu = EVENTS.filter(e => e.lieu);
+  if (withLieu.length) {
+    $('lieux').classList.remove('hidden');
+    $('lieuxList').innerHTML = withLieu.map(e => `<div class="lieu"><div class="nm">${esc(e.lieu)}</div><div class="ad">${esc(e.titre)}${e.date ? ' — ' + new Date(e.date+'T00:00:00Z').getUTCDate() + ' ' + MOIS[new Date(e.date+'T00:00:00Z').getUTCMonth()] : ''}${e.debut ? ' à ' + hh(e.debut) : ''}</div>
+      <a class="btn ghost" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(e.lieu)}">Itinéraire</a></div>`).join('');
+  }
+
+  let progHtml = '', lastDay = null;
+  const ordered = [...EVENTS].sort((a,b) => (a.date ? ts(a) : 9e15) - (b.date ? ts(b) : 9e15));
+  ordered.forEach(e => {
+    if (e.date && e.date !== lastDay) { const d = new Date(e.date+'T00:00:00Z'); progHtml += `<h4>${esc(jour(e))} ${d.getUTCDate()} ${MOIS[d.getUTCMonth()]}</h4>`; lastDay = e.date; }
+    progHtml += `<div class="row"><div class="hr">${e.debut ? hh(e.debut) : '—'}</div><div class="tx">${esc(e.titre)}<small>${esc(e.lieu || (e.date ? '' : 'Date et lieu à confirmer'))}${e.detail ? ' · ' + esc(e.detail) : ''}</small></div></div>`;
+  });
+  $('progList').innerHTML = progHtml;
+
+  if (CONTACTS.length) { $('contacts').classList.remove('hidden'); $('contacts').innerHTML = CONTACTS.map(c => `<a href="${esc(c.href)}">${esc(c.label)}</a>`).join(''); }
+
+  /* ---------- Ouverture + musique ---------- */
+  let opened = false;
+  function openInvite(){
+    if (opened) return; opened = true;
+    $('splash').classList.add('out');
+    document.body.classList.remove('locked');
+    musicBtn.classList.add('show');
+    music.volume = 0.8;
+    music.play().then(() => musicBtn.classList.add('playing')).catch(() => {});
+    window.scrollTo(0, 0);
+    if (window.__trackOpen) window.__trackOpen();
+    if (window.__startAutoScroll) window.__startAutoScroll();
+    setTimeout(() => { fetch(TRACKS[1]).catch(() => {}); }, 6000);   // précharge la 2e musique
+  }
+  $('envelope').addEventListener('click', openInvite);
+  $('envelope').addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') openInvite(); });
+  musicBtn.addEventListener('click', () => {
+    if (music.paused) { music.play().then(() => musicBtn.classList.add('playing')).catch(()=>{}); }
+    else { music.pause(); musicBtn.classList.remove('playing'); }
+  });
+
+  const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { threshold: .15 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  /* ---------- Compte à rebours + calendrier (si des dates existent) ---------- */
+  if (dated().length) {
+    $('countdown-sec').classList.remove('hidden');
+    const months = [...new Set(dated().map(e => e.date.slice(0,7)))].sort();
+    $('calGrid').parentElement.innerHTML = months.map(ym => {
+      const y = +ym.slice(0,4), m = +ym.slice(5) - 1;
+      const marks = new Set(dated().filter(e => e.date.startsWith(ym)).map(e => +e.date.slice(8)));
+      let h = ['Lu','Ma','Me','Je','Ve','Sa','Di'].map(d => `<div class="dow">${d}</div>`).join('');
+      const offset = (new Date(Date.UTC(y, m, 1)).getUTCDay() + 6) % 7;
+      const days = new Date(Date.UTC(y, m + 1, 0)).getUTCDate();
+      for (let i = 0; i < offset; i++) h += '<div></div>';
+      for (let d = 1; d <= days; d++) h += `<div class="day${marks.has(d) ? ' mark' : ''}">${d}</div>`;
+      return `<div class="mname" style="margin-top:22px">${MOIS[m]} ${y}</div><div class="cal-grid">${h}</div>`;
+    }).join('');
+
+    $('addCal').addEventListener('click', () => {
+      const f = (d, t) => d.replace(/-/g,'') + 'T' + (t || '09:00').replace(':','') + '00Z';
+      const L = ['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//Jean-Michel et Miryam//FR','CALSCALE:GREGORIAN'];
+      dated().forEach((e,i) => L.push('BEGIN:VEVENT','UID:jm-' + i + '@mariage','DTSTAMP:' + f(e.date, e.debut),
+        'DTSTART:' + f(e.date, e.debut),'DTEND:' + (e.fin ? f(e.date, e.fin) : new Date(ts(e).getTime() + 3*36e5).toISOString().replace(/[-:]/g,'').replace(/\.\d+/,'')),'SUMMARY:' + e.titre + ' — Jean-Michel & Miryam','LOCATION:' + (e.lieu || '').replace(/,/g,'\\,'),'END:VEVENT'));
+      L.push('END:VCALENDAR');
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(new Blob([L.join('\r\n')], { type:'text/calendar' }));
+      a.download = 'mariage-jean-michel-miryam.ics';
+      document.body.appendChild(a); a.click(); a.remove();
+    });
+  }
+
+  /* ---------- Compte à rebours élégant (sous l'accueil) ---------- */
+  (function(){
+    const list = COMPTES_A_REBOURS.map(t => EVENTS.find(e => e.titre === t && e.date)).filter(Boolean);
+    if (!list.length) return;
+    $('cdCard').classList.remove('hidden');
+    $('cdRows').innerHTML = list.map((e, i) => {
+      const d = new Date(e.date + 'T00:00:00Z');
+      return `<div class="cd-row${i === 0 ? ' main' : ''}" data-i="${i}">
+        <div class="cd-name">${esc(e.titre)}</div>
+        <div class="cd-when">${esc(jour(e))} ${d.getUTCDate()} ${MOIS[d.getUTCMonth()].toLowerCase()}${e.debut ? ' · ' + hh(e.debut) : ''}</div>
+        <div class="cd-nums">
+          <div class="cd-n"><b data-u="d">--</b><span>Jours</span></div><i class="cd-sep">:</i>
+          <div class="cd-n"><b data-u="h">--</b><span>Heures</span></div><i class="cd-sep">:</i>
+          <div class="cd-n"><b data-u="m">--</b><span>Min</span></div><i class="cd-sep">:</i>
+          <div class="cd-n"><b data-u="s">--</b><span>Sec</span></div>
+        </div>
+        <div class="cd-done hidden"></div></div>`;
+    }).join('');
+    const rows = [...$('cdRows').children];
+    const tick = () => {
+      const now = Date.now();
+      rows.forEach((row, i) => {
+        const diff = ts(list[i]).getTime() - now, nums = row.querySelector('.cd-nums'), done = row.querySelector('.cd-done');
+        if (diff > 0) {
+          const v = { d: Math.floor(diff / 864e5), h: pad(Math.floor(diff / 36e5 % 24)), m: pad(Math.floor(diff / 6e4 % 60)), s: pad(Math.floor(diff / 1e3 % 60)) };
+          for (const k in v) row.querySelector(`[data-u="${k}"]`).textContent = v[k];
+        } else {
+          nums.classList.add('hidden'); done.classList.remove('hidden');
+          done.textContent = -diff < 12 * 36e5 ? "C'est aujourd'hui, nous vous attendons 🤍" : "Merci d'avoir partagé ce moment 🤍";
+        }
+      });
+    };
+    tick(); setInterval(tick, 1000);
+  })();
+
+  /* ---------- Musique : la 2e piste démarre à « Confirmer votre présence » ---------- */
+  function fadeTo(v, ms, done){
+    const from = music.volume, t0 = performance.now();
+    (function step(now){ const k = Math.min(1, (now - t0) / ms); music.volume = Math.max(0, Math.min(1, from + (v - from) * k)); if (k < 1) requestAnimationFrame(step); else if (done) done(); })(t0);
+  }
+  function nextTrack(){
+    if (trackIdx === 1) return; trackIdx = 1;
+    const wasPlaying = !music.paused;
+    if (!wasPlaying) { music.src = TRACKS[1]; music.load(); return; }      // en pause : la 2e piste sera lue au prochain « play »
+    fadeTo(0, 1200, () => { music.src = TRACKS[1]; music.play().then(() => { musicBtn.classList.add('playing'); fadeTo(0.8, 1200); }).catch(() => {}); });
+  }
+  const rsvpIO = new IntersectionObserver(es => { if (es[0].isIntersecting && opened) { nextTrack(); rsvpIO.disconnect(); } }, { threshold: .2 });
+  rsvpIO.observe($('rsvp'));
+
+  /* ---------- Galerie : défilement doux et continu (boucle infinie) ---------- */
+  const car = $('carousel'), dots = $('dots');
+  const originals = [...car.children];
+  originals.forEach(sl => car.appendChild(sl.cloneNode(true)));          // copie pour la boucle
+  originals.forEach(sl => car.appendChild(sl.cloneNode(true)));
+  const slides = [...car.children], N = originals.length;
+  originals.forEach(() => dots.appendChild(document.createElement('i')));
+  const lb = $('lightbox');
+  slides.forEach(sl => sl.addEventListener('click', () => { lb.querySelector('img').src = sl.querySelector('img').src; lb.classList.add('show'); galPause(); }));
+  lb.addEventListener('click', () => { lb.classList.remove('show'); });
+
+  function updateActive(){
+    const c = car.getBoundingClientRect(), mid = c.left + c.width / 2;
+    let best = 0, bd = 1e9;
+    slides.forEach((sl,i) => { const r = sl.getBoundingClientRect(); const d = Math.abs(r.left + r.width/2 - mid); if (d < bd) { bd = d; best = i; } });
+    slides.forEach((sl,i) => sl.classList.toggle('active', i === best));
+    [...dots.children].forEach((d,i) => d.classList.toggle('on', i === best % N));
+  }
+  let galPos = 0, galOn = true, galVisible = false, galIdle = null, galLast = performance.now();
+  const GAL_SPEED = 30;                                                    // px par seconde
+  function galPause(){ galOn = false; clearTimeout(galIdle); galIdle = setTimeout(() => { if (!lb.classList.contains('show')) { galPos = car.scrollLeft; galOn = true; } }, 3500); }
+  ['touchstart','mousedown','wheel'].forEach(ev => car.addEventListener(ev, galPause, { passive:true }));
+  new IntersectionObserver(es => { galVisible = es[0].isIntersecting; }, { threshold: .1 }).observe(car);
+  function galLoop(now){
+    const dt = Math.min(now - galLast, 80) / 1000; galLast = now;
+    const setW = slides[N].offsetLeft - slides[0].offsetLeft;
+    if (galOn && galVisible && setW > 0) {
+      galPos += GAL_SPEED * dt;
+      if (galPos >= setW) galPos -= setW;
+      car.scrollLeft = galPos;
+    } else if (!galOn && setW > 0) {
+      if (car.scrollLeft >= setW * 2) car.scrollLeft -= setW;
+    }
+    requestAnimationFrame(galLoop);
+  }
+  car.addEventListener('scroll', () => requestAnimationFrame(updateActive));
+  requestAnimationFrame(galLoop); updateActive();
+
+  /* ---------- Défilement automatique de la page, tout doucement ---------- */
+  const asBtn = $('autoscroll'), PAGE_SPEED = 54;                           // px par seconde (un peu plus rapide)
+  let asOn = false, asY = 0, asLast = 0, asResume = null;
+  const typing = () => /^(INPUT|TEXTAREA)$/.test((document.activeElement || {}).tagName || '');
+  function setAsIcon(){ $('icPause').style.display = asOn ? '' : 'none'; $('icPlay').style.display = asOn ? 'none' : ''; }
+  function asStart(){ asY = window.scrollY; asLast = performance.now(); asOn = true; setAsIcon(); }
+  function asStop(autoResume){
+    asOn = false; setAsIcon(); clearTimeout(asResume);
+    if (autoResume) asResume = setTimeout(() => { if (!typing() && !lb.classList.contains('show')) asStart(); }, 6000);
+  }
+  function asLoop(now){
+    if (asOn) {
+      const dt = Math.min(now - asLast, 80) / 1000; asLast = now;
+      asY += PAGE_SPEED * dt;
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      if (asY >= max) { window.scrollTo({ top: max, behavior:'instant' }); asStop(false); }
+      else window.scrollTo({ top: asY, behavior:'instant' });
+    }
+    requestAnimationFrame(asLoop);
+  }
+  requestAnimationFrame(asLoop);
+  ['wheel','touchstart','mousedown','keydown'].forEach(ev => window.addEventListener(ev, e => {
+    if (!opened || e.target === asBtn || asBtn.contains(e.target)) return;
+    if (asOn || asResume) asStop(true);
+  }, { passive:true }));
+  document.addEventListener('focusin', () => { if (typing()) asStop(false); });
+  asBtn.addEventListener('click', () => { asOn ? asStop(false) : asStart(); });
+  window.__startAutoScroll = () => { asBtn.classList.add('show'); setTimeout(asStart, 3000); };
+
+  /* ---------- RSVP (individuel) ---------- */
+  document.querySelectorAll('.opt').forEach(o => o.addEventListener('click', () => {
+    o.querySelector('input').checked = true;
+    document.querySelectorAll('.opt').forEach(x => x.classList.toggle('active', x.querySelector('input').checked));
+  }));
+  $('rsvpForm').addEventListener('submit', async e => {
+    e.preventDefault();
+    const btn = $('rsvpBtn'); btn.disabled = true; btn.textContent = 'Envoi…';
+    const d = Object.fromEntries(new FormData(e.target).entries());
+    d.prenom = ''; d.marie = 'Non'; d.nom_epoux = ''; d.invite = guest;
+    try {
+      const r = await fetch('/api/rsvps', { method:'POST', headers:{ 'Content-Type':'application/json' }, body: JSON.stringify(d) });
+      if (!r.ok) throw new Error(r.status);
+    } catch (err) {
+      btn.disabled = false; btn.textContent = 'Confirmer';
+      alert("Une erreur est survenue lors de l'envoi. Merci de réessayer, ou de nous appeler directement.");
+      return;
+    }
+    e.target.classList.add('hidden'); $('rsvpOk').classList.add('show');
+  });
+
+  /* ---------- Suivi des invitations (pour l'espace admin) ---------- */
+  if (guest) {
+    const track = type => fetch('/api/track', { method:'POST', headers:{ 'Content-Type':'application/json' }, body: JSON.stringify({ invite: guest, type }), keepalive:true }).catch(()=>{});
+    track('ping');                                            // la page est ouverte
+    setInterval(() => { if (!document.hidden) track('ping'); }, 25000);   // « en ligne »
+    document.addEventListener('visibilitychange', () => { if (!document.hidden) track('ping'); });
+    window.__trackOpen = () => { try { if (sessionStorage.getItem('opened_' + guest)) return; sessionStorage.setItem('opened_' + guest, '1'); } catch (e) {} track('ouverture'); };
+    window.__guest = guest;
+  }
+});
+</script>
+</body>
+</html>
